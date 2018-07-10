@@ -2,27 +2,26 @@ package com.nyist.pojo;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Objects;
 
-/**
- * Created by Administrator on 2018/7/9/009.
- */
 @Entity
-@Table(name = "document", schema = "aduti", catalog = "")
+@Table(name = "document", schema = "aduilt", catalog = "")
 public class DocumentEntity {
-    private int id;
+    private String id;
     private String dname;
-    private String url;
-    private String grouping;
-    private Timestamp updatetime;
-    private String isok;
+    private String fileUrl;
+    private String imgUrl;
+    private Integer grouping;
+    private Timestamp updateTime;
+    private Integer isOk;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -37,70 +36,72 @@ public class DocumentEntity {
     }
 
     @Basic
-    @Column(name = "url")
-    public String getUrl() {
-        return url;
+    @Column(name = "file_url")
+    public String getFileUrl() {
+        return fileUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
+    }
+
+    @Basic
+    @Column(name = "img_url")
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     @Basic
     @Column(name = "grouping")
-    public String getGrouping() {
+    public Integer getGrouping() {
         return grouping;
     }
 
-    public void setGrouping(String grouping) {
+    public void setGrouping(Integer grouping) {
         this.grouping = grouping;
     }
 
     @Basic
-    @Column(name = "updatetime")
-    public Timestamp getUpdatetime() {
-        return updatetime;
+    @Column(name = "update_time")
+    public Timestamp getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdatetime(Timestamp updatetime) {
-        this.updatetime = updatetime;
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Basic
-    @Column(name = "isok")
-    public String getIsok() {
-        return isok;
+    @Column(name = "is_ok")
+    public Integer getIsOk() {
+        return isOk;
     }
 
-    public void setIsok(String isok) {
-        this.isok = isok;
+    public void setIsOk(Integer isOk) {
+        this.isOk = isOk;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         DocumentEntity that = (DocumentEntity) o;
-
-        if (id != that.id) return false;
-        if (dname != null ? !dname.equals(that.dname) : that.dname != null) return false;
-        if (url != null ? !url.equals(that.url) : that.url != null) return false;
-        if (grouping != null ? !grouping.equals(that.grouping) : that.grouping != null) return false;
-        if (updatetime != null ? !updatetime.equals(that.updatetime) : that.updatetime != null) return false;
-        if (isok != null ? !isok.equals(that.isok) : that.isok != null) return false;
-
-        return true;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(dname, that.dname) &&
+                Objects.equals(fileUrl, that.fileUrl) &&
+                Objects.equals(imgUrl, that.imgUrl) &&
+                Objects.equals(grouping, that.grouping) &&
+                Objects.equals(updateTime, that.updateTime) &&
+                Objects.equals(isOk, that.isOk);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (dname != null ? dname.hashCode() : 0);
-        result = 31 * result + (url != null ? url.hashCode() : 0);
-        result = 31 * result + (grouping != null ? grouping.hashCode() : 0);
-        result = 31 * result + (updatetime != null ? updatetime.hashCode() : 0);
-        result = 31 * result + (isok != null ? isok.hashCode() : 0);
-        return result;
+
+        return Objects.hash(id, dname, fileUrl, imgUrl, grouping, updateTime, isOk);
     }
 }

@@ -1,26 +1,24 @@
 package com.nyist.pojo;
 
 import javax.persistence.*;
+import java.util.Objects;
 
-/**
- * Created by Administrator on 2018/7/9/009.
- */
 @Entity
-@Table(name = "authority", schema = "aduti", catalog = "")
+@Table(name = "authority", schema = "aduilt", catalog = "")
 public class AuthorityEntity {
-    private int id;
+    private String id;
     private String pname;
     private String url;
-    private String shorter;
-    private String isok;
+    private Integer sorter;
+    private Integer isOk;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -45,48 +43,40 @@ public class AuthorityEntity {
     }
 
     @Basic
-    @Column(name = "shorter")
-    public String getShorter() {
-        return shorter;
+    @Column(name = "sorter")
+    public Integer getSorter() {
+        return sorter;
     }
 
-    public void setShorter(String shorter) {
-        this.shorter = shorter;
+    public void setSorter(Integer sorter) {
+        this.sorter = sorter;
     }
 
     @Basic
-    @Column(name = "isok")
-    public String getIsok() {
-        return isok;
+    @Column(name = "is_ok")
+    public Integer getIsOk() {
+        return isOk;
     }
 
-    public void setIsok(String isok) {
-        this.isok = isok;
+    public void setIsOk(Integer isOk) {
+        this.isOk = isOk;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         AuthorityEntity that = (AuthorityEntity) o;
-
-        if (id != that.id) return false;
-        if (pname != null ? !pname.equals(that.pname) : that.pname != null) return false;
-        if (url != null ? !url.equals(that.url) : that.url != null) return false;
-        if (shorter != null ? !shorter.equals(that.shorter) : that.shorter != null) return false;
-        if (isok != null ? !isok.equals(that.isok) : that.isok != null) return false;
-
-        return true;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(pname, that.pname) &&
+                Objects.equals(url, that.url) &&
+                Objects.equals(sorter, that.sorter) &&
+                Objects.equals(isOk, that.isOk);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (pname != null ? pname.hashCode() : 0);
-        result = 31 * result + (url != null ? url.hashCode() : 0);
-        result = 31 * result + (shorter != null ? shorter.hashCode() : 0);
-        result = 31 * result + (isok != null ? isok.hashCode() : 0);
-        return result;
+
+        return Objects.hash(id, pname, url, sorter, isOk);
     }
 }

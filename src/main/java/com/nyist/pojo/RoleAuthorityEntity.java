@@ -1,19 +1,17 @@
 package com.nyist.pojo;
 
 import javax.persistence.*;
+import java.util.Objects;
 
-/**
- * Created by Administrator on 2018/7/9/009.
- */
 @Entity
-@Table(name = "role_authority", schema = "aduti", catalog = "")
+@Table(name = "role_authority", schema = "aduilt", catalog = "")
 public class RoleAuthorityEntity {
     private int id;
-    private String role;
-    private String isok;
+    private Integer role;
+    private Integer isOk;
 
     @Id
-    @Column(name = "Id")
+    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -24,43 +22,37 @@ public class RoleAuthorityEntity {
 
     @Basic
     @Column(name = "role")
-    public String getRole() {
+    public Integer getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Integer role) {
         this.role = role;
     }
 
     @Basic
-    @Column(name = "isok")
-    public String getIsok() {
-        return isok;
+    @Column(name = "is_ok")
+    public Integer getIsOk() {
+        return isOk;
     }
 
-    public void setIsok(String isok) {
-        this.isok = isok;
+    public void setIsOk(Integer isOk) {
+        this.isOk = isOk;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         RoleAuthorityEntity that = (RoleAuthorityEntity) o;
-
-        if (id != that.id) return false;
-        if (role != null ? !role.equals(that.role) : that.role != null) return false;
-        if (isok != null ? !isok.equals(that.isok) : that.isok != null) return false;
-
-        return true;
+        return id == that.id &&
+                Objects.equals(role, that.role) &&
+                Objects.equals(isOk, that.isOk);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (role != null ? role.hashCode() : 0);
-        result = 31 * result + (isok != null ? isok.hashCode() : 0);
-        return result;
+
+        return Objects.hash(id, role, isOk);
     }
 }

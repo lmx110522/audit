@@ -4,31 +4,21 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "category", schema = "aduilt", catalog = "")
-public class CategoryEntity {
-    private int id;
-    private String cname;
+@Table(name = "user_module", schema = "aduilt", catalog = "")
+public class UserModuleEntity {
+    private String id;
     private String content;
+    private Integer score;
     private Integer isOk;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
-    }
-
-    @Basic
-    @Column(name = "cname")
-    public String getCname() {
-        return cname;
-    }
-
-    public void setCname(String cname) {
-        this.cname = cname;
     }
 
     @Basic
@@ -39,6 +29,16 @@ public class CategoryEntity {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Basic
+    @Column(name = "score")
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
     }
 
     @Basic
@@ -55,16 +55,16 @@ public class CategoryEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CategoryEntity that = (CategoryEntity) o;
-        return id == that.id &&
-                Objects.equals(cname, that.cname) &&
+        UserModuleEntity that = (UserModuleEntity) o;
+        return Objects.equals(id, that.id) &&
                 Objects.equals(content, that.content) &&
+                Objects.equals(score, that.score) &&
                 Objects.equals(isOk, that.isOk);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, cname, content, isOk);
+        return Objects.hash(id, content, score, isOk);
     }
 }
