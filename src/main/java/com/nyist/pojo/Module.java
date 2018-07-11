@@ -1,24 +1,26 @@
 package com.nyist.pojo;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
- * Created by Administrator on 2018/7/9/009.
+ * Created by Administrator on 2018/7/11/011.
  */
 @Entity
-@Table(name = "moudel", schema = "aduti", catalog = "")
-public class MoudelEntity {
-    private int id;
+public class Module {
+    private String id;
     private String mname;
     private String content;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -47,18 +49,18 @@ public class MoudelEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MoudelEntity that = (MoudelEntity) o;
+        Module module = (Module) o;
 
-        if (id != that.id) return false;
-        if (mname != null ? !mname.equals(that.mname) : that.mname != null) return false;
-        if (content != null ? !content.equals(that.content) : that.content != null) return false;
+        if (id != null ? !id.equals(module.id) : module.id != null) return false;
+        if (mname != null ? !mname.equals(module.mname) : module.mname != null) return false;
+        if (content != null ? !content.equals(module.content) : module.content != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (mname != null ? mname.hashCode() : 0);
         result = 31 * result + (content != null ? content.hashCode() : 0);
         return result;

@@ -1,11 +1,15 @@
 package com.nyist.pojo;
 
-import javax.persistence.*;
-import java.util.Objects;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+/**
+ * Created by Administrator on 2018/7/11/011.
+ */
 @Entity
-@Table(name = "category", schema = "aduilt", catalog = "")
-public class CategoryEntity {
+public class Category {
     private int id;
     private String cname;
     private String content;
@@ -55,16 +59,23 @@ public class CategoryEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CategoryEntity that = (CategoryEntity) o;
-        return id == that.id &&
-                Objects.equals(cname, that.cname) &&
-                Objects.equals(content, that.content) &&
-                Objects.equals(isOk, that.isOk);
+
+        Category category = (Category) o;
+
+        if (id != category.id) return false;
+        if (cname != null ? !cname.equals(category.cname) : category.cname != null) return false;
+        if (content != null ? !content.equals(category.content) : category.content != null) return false;
+        if (isOk != null ? !isOk.equals(category.isOk) : category.isOk != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(id, cname, content, isOk);
+        int result = id;
+        result = 31 * result + (cname != null ? cname.hashCode() : 0);
+        result = 31 * result + (content != null ? content.hashCode() : 0);
+        result = 31 * result + (isOk != null ? isOk.hashCode() : 0);
+        return result;
     }
 }

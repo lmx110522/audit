@@ -1,11 +1,13 @@
 package com.nyist.pojo;
 
 import javax.persistence.*;
-import java.util.Objects;
 
+/**
+ * Created by Administrator on 2018/7/11/011.
+ */
 @Entity
 @Table(name = "user_module", schema = "aduilt", catalog = "")
-public class UserModuleEntity {
+public class UserModule {
     private String id;
     private String content;
     private Integer score;
@@ -55,16 +57,23 @@ public class UserModuleEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserModuleEntity that = (UserModuleEntity) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(content, that.content) &&
-                Objects.equals(score, that.score) &&
-                Objects.equals(isOk, that.isOk);
+
+        UserModule that = (UserModule) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (content != null ? !content.equals(that.content) : that.content != null) return false;
+        if (score != null ? !score.equals(that.score) : that.score != null) return false;
+        if (isOk != null ? !isOk.equals(that.isOk) : that.isOk != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(id, content, score, isOk);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (content != null ? content.hashCode() : 0);
+        result = 31 * result + (score != null ? score.hashCode() : 0);
+        result = 31 * result + (isOk != null ? isOk.hashCode() : 0);
+        return result;
     }
 }

@@ -77,16 +77,7 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/jodconverter-2.2.2.jar</systemPath>
 		</dependency>
-		<dependency>
-			<groupId>org.openoffice</groupId>
-			<artifactId>ridl</artifactId>
-			<version>4.1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.openoffice</groupId>
-			<artifactId>jurt</artifactId>
-			<version>4.1.2</version>
-		</dependency>
+
 	</dependencies>
 
 	<build>

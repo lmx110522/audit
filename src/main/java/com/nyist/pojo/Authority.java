@@ -1,11 +1,15 @@
 package com.nyist.pojo;
 
-import javax.persistence.*;
-import java.util.Objects;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+/**
+ * Created by Administrator on 2018/7/11/011.
+ */
 @Entity
-@Table(name = "authority", schema = "aduilt", catalog = "")
-public class AuthorityEntity {
+public class Authority {
     private String id;
     private String pname;
     private String url;
@@ -66,17 +70,25 @@ public class AuthorityEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AuthorityEntity that = (AuthorityEntity) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(pname, that.pname) &&
-                Objects.equals(url, that.url) &&
-                Objects.equals(sorter, that.sorter) &&
-                Objects.equals(isOk, that.isOk);
+
+        Authority authority = (Authority) o;
+
+        if (id != null ? !id.equals(authority.id) : authority.id != null) return false;
+        if (pname != null ? !pname.equals(authority.pname) : authority.pname != null) return false;
+        if (url != null ? !url.equals(authority.url) : authority.url != null) return false;
+        if (sorter != null ? !sorter.equals(authority.sorter) : authority.sorter != null) return false;
+        if (isOk != null ? !isOk.equals(authority.isOk) : authority.isOk != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(id, pname, url, sorter, isOk);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (pname != null ? pname.hashCode() : 0);
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        result = 31 * result + (sorter != null ? sorter.hashCode() : 0);
+        result = 31 * result + (isOk != null ? isOk.hashCode() : 0);
+        return result;
     }
 }

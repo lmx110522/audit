@@ -3,26 +3,26 @@ package com.nyist.pojo;
 import javax.persistence.*;
 
 /**
- * Created by Administrator on 2018/7/9/009.
+ * Created by Administrator on 2018/7/11/011.
  */
 @Entity
-@Table(name = "persion", schema = "aduti", catalog = "")
-public class PersionEntity {
-    private int id;
+@Table(name = "t_user", schema = "aduilt", catalog = "")
+public class TUser {
+    private String id;
     private String username;
     private String password;
-    private String role;
-    private String grouping;
+    private Integer role;
+    private Integer grouping;
     private String phone;
-    private String isok;
+    private Integer isOk;
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -48,21 +48,21 @@ public class PersionEntity {
 
     @Basic
     @Column(name = "role")
-    public String getRole() {
+    public Integer getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Integer role) {
         this.role = role;
     }
 
     @Basic
     @Column(name = "grouping")
-    public String getGrouping() {
+    public Integer getGrouping() {
         return grouping;
     }
 
-    public void setGrouping(String grouping) {
+    public void setGrouping(Integer grouping) {
         this.grouping = grouping;
     }
 
@@ -77,13 +77,13 @@ public class PersionEntity {
     }
 
     @Basic
-    @Column(name = "isok")
-    public String getIsok() {
-        return isok;
+    @Column(name = "is_ok")
+    public Integer getIsOk() {
+        return isOk;
     }
 
-    public void setIsok(String isok) {
-        this.isok = isok;
+    public void setIsOk(Integer isOk) {
+        this.isOk = isOk;
     }
 
     @Override
@@ -91,28 +91,28 @@ public class PersionEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PersionEntity that = (PersionEntity) o;
+        TUser tUser = (TUser) o;
 
-        if (id != that.id) return false;
-        if (username != null ? !username.equals(that.username) : that.username != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
-        if (role != null ? !role.equals(that.role) : that.role != null) return false;
-        if (grouping != null ? !grouping.equals(that.grouping) : that.grouping != null) return false;
-        if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
-        if (isok != null ? !isok.equals(that.isok) : that.isok != null) return false;
+        if (id != null ? !id.equals(tUser.id) : tUser.id != null) return false;
+        if (username != null ? !username.equals(tUser.username) : tUser.username != null) return false;
+        if (password != null ? !password.equals(tUser.password) : tUser.password != null) return false;
+        if (role != null ? !role.equals(tUser.role) : tUser.role != null) return false;
+        if (grouping != null ? !grouping.equals(tUser.grouping) : tUser.grouping != null) return false;
+        if (phone != null ? !phone.equals(tUser.phone) : tUser.phone != null) return false;
+        if (isOk != null ? !isOk.equals(tUser.isOk) : tUser.isOk != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (grouping != null ? grouping.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (isok != null ? isok.hashCode() : 0);
+        result = 31 * result + (isOk != null ? isOk.hashCode() : 0);
         return result;
     }
 }
