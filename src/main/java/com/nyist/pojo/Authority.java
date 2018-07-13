@@ -6,12 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- * Created by Administrator on 2018/7/11/011.
+ * Created by Administrator on 2018/7/13/013.
  */
 @Entity
 public class Authority {
     private String id;
-    private String pname;
+    private String aname;
     private String url;
     private Integer sorter;
     private Integer isOk;
@@ -27,13 +27,13 @@ public class Authority {
     }
 
     @Basic
-    @Column(name = "pname")
-    public String getPname() {
-        return pname;
+    @Column(name = "aname")
+    public String getAname() {
+        return aname;
     }
 
-    public void setPname(String pname) {
-        this.pname = pname;
+    public void setAname(String aname) {
+        this.aname = aname;
     }
 
     @Basic
@@ -74,7 +74,7 @@ public class Authority {
         Authority authority = (Authority) o;
 
         if (id != null ? !id.equals(authority.id) : authority.id != null) return false;
-        if (pname != null ? !pname.equals(authority.pname) : authority.pname != null) return false;
+        if (aname != null ? !aname.equals(authority.aname) : authority.aname != null) return false;
         if (url != null ? !url.equals(authority.url) : authority.url != null) return false;
         if (sorter != null ? !sorter.equals(authority.sorter) : authority.sorter != null) return false;
         if (isOk != null ? !isOk.equals(authority.isOk) : authority.isOk != null) return false;
@@ -85,7 +85,7 @@ public class Authority {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (pname != null ? pname.hashCode() : 0);
+        result = 31 * result + (aname != null ? aname.hashCode() : 0);
         result = 31 * result + (url != null ? url.hashCode() : 0);
         result = 31 * result + (sorter != null ? sorter.hashCode() : 0);
         result = 31 * result + (isOk != null ? isOk.hashCode() : 0);

@@ -41,24 +41,24 @@ public class Doc2HtmlUtil {
      * @param fromFileInputStream:
      * @throws IOException
      */
-    public String file2pdf(InputStream fromFileInputStream, String toFilePath,String type) throws IOException {
+    public InputStream file2pdf(InputStream fromFileInputStream, String toFilePath,String type,String fileOtherName) throws IOException {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         String timesuffix = sdf.format(date);
         String docFileName = null;
         String htmFileName = null;
         if(".doc".equals(type)){
-            docFileName = "doc_" + timesuffix + ".doc";
-            htmFileName = "doc_" + timesuffix + ".pdf";
+            docFileName = fileOtherName + timesuffix + ".doc";
+            htmFileName = fileOtherName + timesuffix + ".pdf";
         }else if(".docx".equals(type)){
-            docFileName = "docx_" + timesuffix + ".docx";
-            htmFileName = "docx_" + timesuffix + ".pdf";
+            docFileName = fileOtherName + timesuffix + ".docx";
+            htmFileName = fileOtherName + timesuffix + ".pdf";
         }else if(".xls".equals(type)){
-            docFileName = "xls_" + timesuffix + ".xls";
-            htmFileName = "xls_" + timesuffix + ".pdf";
+            docFileName = fileOtherName + timesuffix + ".xls";
+            htmFileName = fileOtherName + timesuffix + ".pdf";
         }else if(".ppt".equals(type)){
-            docFileName = "ppt_" + timesuffix + ".ppt";
-            htmFileName = "ppt_" + timesuffix + ".pdf";
+            docFileName = fileOtherName + timesuffix + ".ppt";
+            htmFileName = fileOtherName + timesuffix + ".pdf";
         }else{
             return null;
         }
@@ -99,10 +99,12 @@ public class Doc2HtmlUtil {
         connection.disconnect();
         // 转换完之后删除word文件
         docInputFile.delete();
-        return htmFileName;
+        InputStream ftpInputStream=new FileInputStream(htmlOutputFile);
+
+        return ftpInputStream;
     }
 
-    public static void main(String[] args) throws IOException {
+/*    public static void main(String[] args) throws IOException {
         Doc2HtmlUtil coc2HtmlUtil = getDoc2HtmlUtilInstance ();
         File file = null;
         FileInputStream fileInputStream = null;
@@ -112,6 +114,6 @@ public class Doc2HtmlUtil {
 
         coc2HtmlUtil.file2pdf(fileInputStream, "E:/360","doc");
 
-    }
+    }*/
 
 }

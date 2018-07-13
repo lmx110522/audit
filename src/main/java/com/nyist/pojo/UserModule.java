@@ -3,7 +3,7 @@ package com.nyist.pojo;
 import javax.persistence.*;
 
 /**
- * Created by Administrator on 2018/7/11/011.
+ * Created by Administrator on 2018/7/13/013.
  */
 @Entity
 @Table(name = "user_module", schema = "aduilt", catalog = "")
