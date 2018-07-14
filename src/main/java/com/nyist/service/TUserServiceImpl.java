@@ -1,6 +1,7 @@
 package com.nyist.service;
 
 import com.nyist.pojo.TUser;
+import com.nyist.pojo.TUser4;
 import com.nyist.repository.TUserRepository;
 import com.nyist.result.NyistResult;
 import com.nyist.utils.JsonUtils;
@@ -50,6 +51,19 @@ public class TUserServiceImpl implements TUserService {
         jedisCluster.expire(REDIS_USER_SESSION_KEY + ":" + token, SSO_SESSION_EXPIRE);
         return NyistResult.ok(token);
     }
+
+    @Override
+    public NyistResult addTUser4(TUser4 tUser4) {
+        TUser tUser=tUser4.getUser();
+        String parentId=tUser4.getParentId();
+        if(parentId!=null) {
+            TUser parent = tUserRepository.getOne(parentId);
+            tUser.setTuserByParentId(parent);
+        }
+        tUserRepository.save(tUser);
+        return NyistResult.ok();
+    }
+
     public void logout(String token) {
         jedisCluster.del(REDIS_USER_SESSION_KEY + ":" + token);
     }

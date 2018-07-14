@@ -15,7 +15,7 @@ public class Authority {
     private String url;
     private Integer sorter;
     private Integer isOk;
-
+    private Authority authorityByParentid;
     @Id
     @Column(name = "id")
     public String getId() {

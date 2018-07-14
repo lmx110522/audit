@@ -1,9 +1,11 @@
 package com.nyist.pojo;
 
+import org.springframework.ui.Model;
+
 import javax.persistence.*;
 
 /**
- * Created by Administrator on 2018/7/13/013.
+ * Created by Administrator on 2018/7/14/014.
  */
 @Entity
 @Table(name = "t_user", schema = "aduilt", catalog = "")
@@ -15,7 +17,9 @@ public class TUser {
     private Integer grouping;
     private String phone;
     private Integer isOk;
-
+    private String usernumber;
+    private TUser tuserByParentId;
+    private Module moduleByMid;
     @Id
     @Column(name = "id")
     public String getId() {
@@ -86,6 +90,16 @@ public class TUser {
         this.isOk = isOk;
     }
 
+    @Basic
+    @Column(name = "usernumber")
+    public String getUsernumber() {
+        return usernumber;
+    }
+
+    public void setUsernumber(String usernumber) {
+        this.usernumber = usernumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -100,6 +114,7 @@ public class TUser {
         if (grouping != null ? !grouping.equals(tUser.grouping) : tUser.grouping != null) return false;
         if (phone != null ? !phone.equals(tUser.phone) : tUser.phone != null) return false;
         if (isOk != null ? !isOk.equals(tUser.isOk) : tUser.isOk != null) return false;
+        if (usernumber != null ? !usernumber.equals(tUser.usernumber) : tUser.usernumber != null) return false;
 
         return true;
     }
@@ -113,6 +128,25 @@ public class TUser {
         result = 31 * result + (grouping != null ? grouping.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (isOk != null ? isOk.hashCode() : 0);
+        result = 31 * result + (usernumber != null ? usernumber.hashCode() : 0);
         return result;
+    }
+    @ManyToOne
+    @JoinColumn(name = "parentId",referencedColumnName = "id")
+    public TUser getTuserByParentId() {
+        return tuserByParentId;
+    }
+
+    public void setTuserByParentId(TUser tuserByParentId) {
+        this.tuserByParentId = tuserByParentId;
+    }
+    @ManyToOne
+    @JoinColumn(name = "mid",referencedColumnName = "id")
+    public Module getModuleByMid() {
+        return moduleByMid;
+    }
+
+    public void setModuleByMid(Module moduleByMid) {
+        this.moduleByMid = moduleByMid;
     }
 }

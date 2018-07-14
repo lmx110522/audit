@@ -6,7 +6,6 @@ import javax.persistence.*;
  * Created by Administrator on 2018/7/13/013.
  */
 @Entity
-@Table(name = "role_authority", schema = "aduilt", catalog = "")
 public class RoleAuthority {
     private int id;
     private Integer role;

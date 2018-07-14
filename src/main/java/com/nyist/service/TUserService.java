@@ -1,5 +1,6 @@
 package com.nyist.service;
 
+import com.nyist.pojo.TUser4;
 import com.nyist.result.NyistResult;
 
 /**
@@ -7,4 +8,5 @@ import com.nyist.result.NyistResult;
  */
 public interface TUserService {
         NyistResult login(String username,String password);
+        NyistResult addTUser4(TUser4 tUser4);
 }
