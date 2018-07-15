@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-07-14 18:22:28
+Date: 2018-07-15 19:09:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -34,6 +34,22 @@ CREATE TABLE `authority` (
 -- ----------------------------
 -- Records of authority
 -- ----------------------------
+INSERT INTO `authority` VALUES ('1', '审核记录', null, '1', '1', null);
+INSERT INTO `authority` VALUES ('10', '个人信息', null, '11', '1', null);
+INSERT INTO `authority` VALUES ('11', '审核人管理', null, '12', '1', '4');
+INSERT INTO `authority` VALUES ('12', '教研室管理', null, '13', '1', '4');
+INSERT INTO `authority` VALUES ('13', '系院管理', null, '14', '1', '4');
+INSERT INTO `authority` VALUES ('14', '待我审核', null, '15', '1', '9');
+INSERT INTO `authority` VALUES ('15', '审核记录', null, '16', '1', '9');
+INSERT INTO `authority` VALUES ('16', '排行榜', null, '8', '1', null);
+INSERT INTO `authority` VALUES ('2', '项目工程', null, '2', '1', null);
+INSERT INTO `authority` VALUES ('3', '教研室预览', null, '3', '1', null);
+INSERT INTO `authority` VALUES ('4', '账号管理', null, '4', '1', null);
+INSERT INTO `authority` VALUES ('5', '教研室查看', null, '5', '1', null);
+INSERT INTO `authority` VALUES ('6', '审核人分配(文)', null, '6', '1', null);
+INSERT INTO `authority` VALUES ('7', '审核人分配(理)', null, '7', '1', null);
+INSERT INTO `authority` VALUES ('8', '教研室预览', null, '9', '1', null);
+INSERT INTO `authority` VALUES ('9', '教研室审核', null, '10', '1', null);
 
 -- ----------------------------
 -- Table structure for document
@@ -95,6 +111,27 @@ CREATE TABLE `role_authority` (
 -- ----------------------------
 -- Records of role_authority
 -- ----------------------------
+INSERT INTO `role_authority` VALUES ('1', '4', '1', '1');
+INSERT INTO `role_authority` VALUES ('2', '4', '2', '1');
+INSERT INTO `role_authority` VALUES ('3', '2', '3', '1');
+INSERT INTO `role_authority` VALUES ('4', '1', '4', '1');
+INSERT INTO `role_authority` VALUES ('5', '1', '5', '1');
+INSERT INTO `role_authority` VALUES ('6', '1', '6', '1');
+INSERT INTO `role_authority` VALUES ('7', '1', '7', '1');
+INSERT INTO `role_authority` VALUES ('8', '2', '8', '1');
+INSERT INTO `role_authority` VALUES ('9', '3', '9', '1');
+INSERT INTO `role_authority` VALUES ('10', '1', '10', '1');
+INSERT INTO `role_authority` VALUES ('11', '2', '10', '1');
+INSERT INTO `role_authority` VALUES ('12', '3', '10', '1');
+INSERT INTO `role_authority` VALUES ('13', '4', '10', '1');
+INSERT INTO `role_authority` VALUES ('14', '1', '11', '1');
+INSERT INTO `role_authority` VALUES ('15', '1', '12', '1');
+INSERT INTO `role_authority` VALUES ('16', '1', '13', '1');
+INSERT INTO `role_authority` VALUES ('17', '3', '14', '1');
+INSERT INTO `role_authority` VALUES ('18', '3', '15', '1');
+INSERT INTO `role_authority` VALUES ('19', '1', '16', '1');
+INSERT INTO `role_authority` VALUES ('20', '2', '16', '1');
+INSERT INTO `role_authority` VALUES ('21', '4', '16', '1');
 
 -- ----------------------------
 -- Table structure for t_user

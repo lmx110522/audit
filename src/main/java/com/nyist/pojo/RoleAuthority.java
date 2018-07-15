@@ -10,7 +10,7 @@ public class RoleAuthority {
     private int id;
     private Integer role;
     private Integer isOk;
-
+    private Authority authorityByAid;
     @Id
     @Column(name = "id")
     public int getId() {
@@ -61,5 +61,14 @@ public class RoleAuthority {
         result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (isOk != null ? isOk.hashCode() : 0);
         return result;
+    }
+    @ManyToOne
+    @JoinColumn(name = "aid",referencedColumnName = "id")
+    public Authority getAuthorityByAid() {
+        return authorityByAid;
+    }
+
+    public void setAuthorityByAid(Authority authorityByAid) {
+        this.authorityByAid = authorityByAid;
     }
 }
