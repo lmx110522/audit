@@ -11,7 +11,8 @@ public class UserModule {
     private String content;
     private Integer score;
     private Integer isOk;
-
+    private TUser tUserByUid;
+    private Module moduleByMid;
     @Id
     @Column(name = "id")
     public String getId() {
@@ -74,5 +75,23 @@ public class UserModule {
         result = 31 * result + (score != null ? score.hashCode() : 0);
         result = 31 * result + (isOk != null ? isOk.hashCode() : 0);
         return result;
+    }
+    @ManyToOne
+    @JoinColumn(name = "uid", referencedColumnName = "id")
+    public TUser gettUserByUid() {
+        return tUserByUid;
+    }
+
+    public void settUserByUid(TUser tUserByUid) {
+        this.tUserByUid = tUserByUid;
+    }
+    @ManyToOne
+    @JoinColumn(name = "mid",referencedColumnName = "id")
+    public Module getModuleByMid() {
+        return moduleByMid;
+    }
+
+    public void setModuleByMid(Module moduleByMid) {
+        this.moduleByMid = moduleByMid;
     }
 }

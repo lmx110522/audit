@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import redis.clients.jedis.JedisCluster;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -53,16 +54,41 @@ public class TUserServiceImpl implements TUserService {
     }
 
     @Override
-    public NyistResult addTUser4(TUser4 tUser4) {
+    public NyistResult addTUser4(TUser4 tUser4) {    //添加用户,权限请通过前台直接进行pojo绑定
         TUser tUser=tUser4.getUser();
         String parentId=tUser4.getParentId();
         if(parentId!=null) {
             TUser parent = tUserRepository.getOne(parentId);
             tUser.setTuserByParentId(parent);
+            tUser.setGrouping(parent.getGrouping());
         }
+        tUser.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+        tUser.setIsOk(1);
         tUserRepository.save(tUser);
         return NyistResult.ok();
     }
+    //修改密码
+    @Override
+    public NyistResult updatePasswrod(TUser4 tUser4) {
+        TUser tUser=tUser4.getUser();
+        String uuidPass= DigestUtils.md5DigestAsHex(tUser.getPassword().getBytes());
+        tUser.setPassword(uuidPass);
+    //    tUserRepository.updateTUserPassword(uuidPass,tUser.getId());
+        return NyistResult.ok();
+    }
+
+    @Override
+    public NyistResult findAll() {
+        List<TUser> tUsers=tUserRepository.findAll();
+        return NyistResult.ok(tUsers);
+    }
+
+    @Override
+    public NyistResult findAuditor(Integer grouping){
+        List<TUser> Auditors=tUserRepository.findAuditor(grouping);
+        return NyistResult.ok(Auditors);
+    }
+
 
     public void logout(String token) {
         jedisCluster.del(REDIS_USER_SESSION_KEY + ":" + token);

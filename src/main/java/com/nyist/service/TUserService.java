@@ -9,4 +9,7 @@ import com.nyist.result.NyistResult;
 public interface TUserService {
         NyistResult login(String username,String password);
         NyistResult addTUser4(TUser4 tUser4);
+        NyistResult updatePasswrod(TUser4 tUser4);
+        NyistResult findAll();    //账号管理
+        NyistResult findAuditor(Integer grouping) ;
 }

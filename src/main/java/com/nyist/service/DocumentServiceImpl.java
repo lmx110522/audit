@@ -42,7 +42,7 @@ public class DocumentServiceImpl implements  DocumentService {
                 FtpUtil.uploadFile(host, port, username, password, basePath
                         , oldname, file.getInputStream());
                 //调用Doc2HtmlUtil工具类
-                Doc2HtmlUtil coc2HtmlUtil = Doc2HtmlUtil.getDoc2HtmlUtilInstance();
+               /* Doc2HtmlUtil coc2HtmlUtil = Doc2HtmlUtil.getDoc2HtmlUtilInstance();
                 File file1 = null;
                 FileInputStream fileInputStream = null;
                 //这里写的是被转文件的路径
@@ -55,11 +55,11 @@ public class DocumentServiceImpl implements  DocumentService {
                 int num = substring.length();//得到后缀名长度
                 String fileOtherName = file.getOriginalFilename().substring(0, file.getOriginalFilename().length() - num);//得到文件名。去掉了后缀
                 //上述的所有路径以及以下路劲均可自定义
-                coc2HtmlUtil.file2pdf(fileInputStream, "D:/ss", substring, fileOtherName);
+                coc2HtmlUtil.file2pdf(fileInputStream, "D:/ss", substring, fileOtherName);*/
             } catch (IOException e) {
-
+                e.printStackTrace();
             }
         }
-        return null;
+        return NyistResult.ok();
     }
 }
