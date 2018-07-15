@@ -8,12 +8,16 @@ import com.nyist.repository.TUserRepository;
 import com.nyist.repository.UserModuleRepository;
 import com.nyist.result.NyistResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
  * Created by Administrator on 2018/7/15/015.
  */
+@Service
+@Transactional
 public class UserModuleServiceImpl implements  UserModuleService {
     @Autowired
     private UserModuleRepository userModuleRepository;
