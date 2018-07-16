@@ -9,4 +9,5 @@ import com.nyist.result.NyistResult;
 public interface UserModuleService {
     NyistResult moduleDistribution();
     NyistResult giveModule(UserModuleList userModuleList);      //分配模块
+
 }

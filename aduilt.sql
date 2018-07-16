@@ -3,14 +3,14 @@ Navicat MySQL Data Transfer
 
 Source Server         : centos7.3
 Source Server Version : 50717
-Source Host           : 192.168.41.140:3306
+Source Host           : 192.168.41.141:3306
 Source Database       : aduilt
 
 Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-07-15 19:09:19
+Date: 2018-07-16 15:17:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -102,7 +102,7 @@ CREATE TABLE `role_authority` (
   `id` int(11) NOT NULL,
   `role` int(10) DEFAULT NULL COMMENT '职能',
   `aid` varchar(255) DEFAULT NULL,
-  `is_ok` int(10) DEFAULT NULL,
+  `is_ok` int(10) DEFAULT NULL COMMENT '0代表可用，1代表不可用',
   PRIMARY KEY (`id`),
   KEY `authority_id` (`aid`),
   CONSTRAINT `role_authority_ibfk_1` FOREIGN KEY (`aid`) REFERENCES `authority` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -142,12 +142,12 @@ CREATE TABLE `t_user` (
   `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `role` int(10) DEFAULT NULL COMMENT '0为超级管理员，1为教务处室主任，2为系院，3为审核员，4为教研室',
-  `grouping` int(10) DEFAULT NULL,
+  `grouping` int(10) DEFAULT NULL COMMENT '0代表理科，1代表文科',
   `mid` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
-  `is_ok` int(10) DEFAULT NULL,
+  `is_ok` int(10) DEFAULT NULL COMMENT '0代表不可用，1代表可用，2代表教研室已上传，3代表审核人已上传，4代表教研室已上传',
   `parent_id` varchar(255) DEFAULT NULL COMMENT '所属教研室',
-  `usernumber` varchar(100) NOT NULL,
+  `usernumber` varchar(100) NOT NULL COMMENT '用户账号',
   PRIMARY KEY (`id`),
   KEY `mid` (`mid`),
   KEY `parentid` (`parent_id`),
@@ -158,6 +158,11 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
+INSERT INTO `t_user` VALUES ('1', '李主任', '123456', '1', null, null, '1214131', '1', null, '251133');
+INSERT INTO `t_user` VALUES ('2', '软件学院', '123456', '2', '0', null, null, '1', null, '323424');
+INSERT INTO `t_user` VALUES ('3', 'gis工作室', '123456', '4', '0', null, '231231', '1', '2', '12');
+INSERT INTO `t_user` VALUES ('4', '梦想', '123456', '4', '0', null, '122343', '1', '2', '13');
+INSERT INTO `t_user` VALUES ('5', '添加', '123456', '4', '0', null, '12768823', '3', '2', '14');
 
 -- ----------------------------
 -- Table structure for user_module

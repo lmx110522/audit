@@ -1,5 +1,6 @@
 package com.nyist.service;
 
+import com.nyist.pojo.CheckResult;
 import com.nyist.pojo.TUser;
 import com.nyist.pojo.TUser4;
 import com.nyist.repository.TUserRepository;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import redis.clients.jedis.JedisCluster;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -85,12 +87,39 @@ public class TUserServiceImpl implements TUserService {
 
     @Override
     public NyistResult findAuditor(Integer grouping){
-        List<TUser> Auditors=tUserRepository.findAuditor(grouping);
+        List<TUser> Auditors=tUserRepository.findAuditor(grouping);     //按文理组查找审核人
         return NyistResult.ok(Auditors);
     }
 
-
+    @Override
+    public NyistResult checkLaboratory() {
+        List<TUser> parents=tUserRepository.findTUsersByRole(2);    //查找全部系院
+        List<CheckResult> result=new ArrayList<CheckResult>();
+        for (TUser parent:parents){
+            CheckResult checkResult=new CheckResult();
+            Long allcount=tUserRepository.countByTuserByParentId(parent);
+            Long getcount=tUserRepository.countByTuserByParentIdAndIsOk(parent,4);   //查找全部上传过文件的教研室
+            checkResult.settUser(parent);
+            checkResult.setAllLaboratoryCount(allcount);
+            checkResult.setGetLaboratoryCount(getcount);
+            result.add(checkResult);
+        }
+        //将对应的pojo返回
+        return NyistResult.ok(result);
+    }
+    @Override
+    public NyistResult getUser(String id){
+        TUser tUser=tUserRepository.findTUserById(id);
+        return NyistResult.ok(tUser);
+    }
+    @Override
     public void logout(String token) {
         jedisCluster.del(REDIS_USER_SESSION_KEY + ":" + token);
+    }
+    @Override
+    public NyistResult laboratoryList(String parentId){
+        TUser parent =tUserRepository.findTUserById(parentId);
+        List<TUser> result=tUserRepository.findTUserByTuserByParentId(parent);
+        return NyistResult.ok(result);
     }
 }
