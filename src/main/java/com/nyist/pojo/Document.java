@@ -1,9 +1,6 @@
 package com.nyist.pojo;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -18,7 +15,8 @@ public class Document {
     private Integer grouping;
     private Timestamp updateTime;
     private Integer isOk;
-
+    private Module moduleByMid;
+    private TUser tUserByUid;
     @Id
     @Column(name = "id")
     public String getId() {
@@ -117,5 +115,24 @@ public class Document {
         result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
         result = 31 * result + (isOk != null ? isOk.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "mid",referencedColumnName = "id")
+    public Module getModuleByMid() {
+        return moduleByMid;
+    }
+
+    public void setModuleByMid(Module moduleByMid) {
+        this.moduleByMid = moduleByMid;
+    }
+    @ManyToOne
+    @JoinColumn(name = "uid",referencedColumnName = "id")
+    public TUser gettUserByUid() {
+        return tUserByUid;
+    }
+
+    public void settUserByUid(TUser tUserByUid) {
+        this.tUserByUid = tUserByUid;
     }
 }

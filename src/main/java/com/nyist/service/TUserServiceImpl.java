@@ -5,15 +5,22 @@ import com.nyist.pojo.TUser;
 import com.nyist.pojo.TUser4;
 import com.nyist.repository.TUserRepository;
 import com.nyist.result.NyistResult;
+import com.nyist.utils.CookieUtils;
 import com.nyist.utils.JsonUtils;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
+
+
 import redis.clients.jedis.JedisCluster;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -38,7 +45,8 @@ public class TUserServiceImpl implements TUserService {
     @Value("${SSO_SESSION_EXPIRE}")
     private Integer SSO_SESSION_EXPIRE;
     @Override
-    public NyistResult login(String username, String password) {
+    public NyistResult login(HttpServletRequest
+                                         request, HttpServletResponse response,String username, String password) {
         boolean result=false;
         TUser tUser=tUserRepository.findTUserByUsernameAndPassword(username,password);
         if(tUser==null)
@@ -52,8 +60,27 @@ public class TUserServiceImpl implements TUserService {
         jedisCluster.set(REDIS_USER_SESSION_KEY + ":" + token, JsonUtils.objectToJson(tUser));
         //设置session过期时间
         jedisCluster.expire(REDIS_USER_SESSION_KEY + ":" + token, SSO_SESSION_EXPIRE);
+        CookieUtils.setCookie(request, response, "TOKEN", token);   //将token写入cookie
+
         return NyistResult.ok(token);
     }
+    @Override
+    public NyistResult getUserByToken(String token){
+        //从redis中取用户信息
+        String userJson = jedisCluster.get(REDIS_USER_SESSION_KEY + ":" + token);
+
+        if (StringUtils.isBlank(userJson)) {
+            return NyistResult.build(400, "该用户已过期");
+        }
+        //把json转换成user对象
+        TUser user = JsonUtils.jsonToPojo(userJson, TUser.class);
+        //更新用户有效期
+        jedisCluster.expire(REDIS_USER_SESSION_KEY + ":" + token, SSO_SESSION_EXPIRE);
+
+        return NyistResult.ok(user);
+    }
+
+
 
     @Override
     public NyistResult addTUser4(TUser4 tUser4) {    //添加用户,权限请通过前台直接进行pojo绑定

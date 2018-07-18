@@ -13,6 +13,7 @@ public class UserModule {
     private Integer isOk;
     private TUser tUserByUid;
     private Module moduleByMid;
+    private TUser tUserByTuid;
     @Id
     @Column(name = "id")
     public String getId() {
@@ -93,5 +94,14 @@ public class UserModule {
 
     public void setModuleByMid(Module moduleByMid) {
         this.moduleByMid = moduleByMid;
+    }
+    @ManyToOne
+    @JoinColumn(name = "tuid",referencedColumnName = "id")
+    public TUser gettUserByTuid() {
+        return tUserByTuid;
+    }
+
+    public void settUserByTuid(TUser tUserByTuid) {
+        this.tUserByTuid = tUserByTuid;
     }
 }

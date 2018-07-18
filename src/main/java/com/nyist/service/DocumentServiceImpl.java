@@ -1,7 +1,12 @@
 package com.nyist.service;
 
 import com.nyist.pojo.Document;
+import com.nyist.pojo.DocumentList;
+import com.nyist.pojo.UserModule;
 import com.nyist.repository.DocumentRepository;
+import com.nyist.repository.ModuleRepository;
+import com.nyist.repository.TUserRepository;
+import com.nyist.repository.UserModuleRepository;
 import com.nyist.result.NyistResult;
 import com.nyist.utils.Doc2HtmlUtil;
 import com.nyist.utils.FtpUtil;
@@ -39,15 +44,23 @@ public class DocumentServiceImpl implements  DocumentService {
     private String fileUrl;
     @Autowired
     private DocumentRepository documentRepository;
+    @Autowired
+    private TUserRepository tUserRepository;
+    @Autowired
+    private ModuleRepository moduleRepository;
+    @Autowired
+    UserModuleRepository userModuleRepository;
     @Override
-    public NyistResult fileupload(List<MultipartFile> files, Document document) {
-        for(MultipartFile file:files) {
-            if (!file.isEmpty()) {
+    public NyistResult fileupload(List<MultipartFile> files, DocumentList documentList) {
+        List<Document> documents=documentList.getDocumentList();
+        for(int i=0;i<files.size();i++) {
+            if (!files.get(i).isEmpty()) {
                 try {
-                    String oldname = file.getOriginalFilename();
+                    String oldname = files.get(i).getOriginalFilename();
                     //文件上传
                     FtpUtil.uploadFile(host, port, username, password, basePath
-                            , oldname, file.getInputStream());
+                            , oldname, files.get(i).getInputStream());
+                    Document document=documents.get(0);
                     //调用Doc2HtmlUtil工具类
                /* Doc2HtmlUtil coc2HtmlUtil = Doc2HtmlUtil.getDoc2HtmlUtilInstance();
                 File file1 = null;
@@ -67,11 +80,21 @@ public class DocumentServiceImpl implements  DocumentService {
                document.setFileUrl(fileUrl+"/"+oldname);
                document.setIsOk(1);
                document.setUpdateTime(new Timestamp(new Date().getTime()));
+               document.setModuleByMid(moduleRepository.findModuleById(document.getModuleByMid().getId()));
+               document.settUserByUid(tUserRepository.findTUserById(document.gettUserByUid().getId()));
                documentRepository.save(document);     //添加文件
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
+        }
+        //添加教研室上传信息
+        for (Document document:documents){
+            UserModule userModule=new UserModule();
+            userModule.setModuleByMid(document.getModuleByMid());
+            userModule.settUserByTuid(document.gettUserByUid());
+            userModule.setIsOk(0);
+            userModuleRepository.save(userModule);
         }
         return NyistResult.ok();
     }

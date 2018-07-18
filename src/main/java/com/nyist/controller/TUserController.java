@@ -17,7 +17,7 @@ public class TUserController {
     @RequestMapping("/count")
     public Long getCount(){
         TUser tUser= (TUser) tUserService.getUser("2").getData();
-        Long count = (Long) tUserService.checkLaboratory(tUser).getData();
+        Long count = null;
         return count;
     }
 }
