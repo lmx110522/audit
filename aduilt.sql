@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-07-16 15:17:22
+Date: 2018-07-18 14:25:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -62,7 +62,7 @@ CREATE TABLE `document` (
   `img_url` varchar(255) DEFAULT NULL,
   `grouping` int(10) DEFAULT NULL,
   `mid` varchar(255) DEFAULT NULL,
-  `uid` varchar(255) DEFAULT NULL,
+  `uid` varchar(255) DEFAULT NULL COMMENT '所属教研室',
   `update_time` datetime DEFAULT NULL,
   `is_ok` int(10) DEFAULT NULL COMMENT '是否删除',
   PRIMARY KEY (`id`),
@@ -85,6 +85,7 @@ CREATE TABLE `module` (
   `mname` varchar(255) DEFAULT NULL,
   `content` varchar(255) DEFAULT NULL,
   `uid` varchar(255) DEFAULT NULL,
+  `is_ok` int(10) DEFAULT NULL COMMENT '0代表未审核，1代表审核中，2代表审核结束',
   PRIMARY KEY (`id`),
   KEY `user_uid` (`uid`),
   CONSTRAINT `module_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `t_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -93,6 +94,8 @@ CREATE TABLE `module` (
 -- ----------------------------
 -- Records of module
 -- ----------------------------
+INSERT INTO `module` VALUES ('1', '制度建设', null, null, null);
+INSERT INTO `module` VALUES ('2', '教学效果', null, null, null);
 
 -- ----------------------------
 -- Table structure for role_authority
@@ -170,16 +173,19 @@ INSERT INTO `t_user` VALUES ('5', '添加', '123456', '4', '0', null, '12768823'
 DROP TABLE IF EXISTS `user_module`;
 CREATE TABLE `user_module` (
   `id` varchar(255) NOT NULL,
-  `uid` varchar(255) NOT NULL,
-  `mid` varchar(255) NOT NULL,
+  `uid` varchar(255) DEFAULT NULL COMMENT '审核人id',
+  `mid` varchar(255) NOT NULL COMMENT '对应模块',
   `content` varchar(255) DEFAULT NULL,
   `score` int(11) DEFAULT NULL,
-  `is_ok` int(10) DEFAULT NULL,
+  `is_ok` int(10) DEFAULT NULL COMMENT '0代表未审核，1代表审核中，2代表审核结束',
+  `tuid` varchar(255) NOT NULL COMMENT '对应上传的教研室',
   PRIMARY KEY (`id`),
   KEY `persion_id` (`uid`),
   KEY `model_id` (`mid`),
+  KEY `user_module_ibfk_3` (`tuid`),
   CONSTRAINT `user_module_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `t_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `user_module_ibfk_2` FOREIGN KEY (`mid`) REFERENCES `module` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `user_module_ibfk_2` FOREIGN KEY (`mid`) REFERENCES `module` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `user_module_ibfk_3` FOREIGN KEY (`tuid`) REFERENCES `t_user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
