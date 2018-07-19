@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,7 +50,31 @@ public class UserModuleServiceImpl implements  UserModuleService {
         String token= CookieUtils.getCookieValue(request,"TOKEN");
         TUser checker= (TUser) tUserService.getUserByToken(token).getData();
         List<UserModule> userModules=userModuleRepository.findUserModulesByModuleByMidAndIsOk(checker.getModuleByMid(),0);
+        List<UserModule> removeList=new ArrayList<UserModule>();
+        for (UserModule userModule:userModules){
+            TUser upUser=userModule.gettUserByTuid();
+            if(checker.getGrouping()!=upUser.getGrouping()){
+                removeList.add(userModule);
+            }
+        }
+        userModules.removeAll(removeList);
         return NyistResult.ok(userModules);
+    }
+
+    @Override
+    public NyistResult checkList(HttpServletRequest request) {
+        String token= CookieUtils.getCookieValue(request,"TOKEN");    //得到当前用户
+        TUser checker= (TUser) tUserService.getUserByToken(token).getData();
+        List<UserModule> userModuleList=userModuleRepository.findUserModulesByTUserByUid(checker.getId());
+        return NyistResult.ok(userModuleList);
+    }
+
+    @Override
+    public NyistResult addUserModule(UserModule userModule) {
+        TUser checker=userModule.gettUserByUid();
+        userModule.settUserByUid(checker);
+        userModule.setIsOk(1);
+        return NyistResult.ok();
     }
 
 }

@@ -11,4 +11,5 @@ import java.util.List;
  */
 public interface UserModuleRepository extends JpaRepository<UserModule,String>{
     List<UserModule> findUserModulesByModuleByMidAndIsOk(Module module,Integer isOk);
+    List<UserModule> findUserModulesByTUserByUid(String uid);
 }
